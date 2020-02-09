@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-2">Filter by:</div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Filtered by: {{listFilter}} </h4>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table" *ngIf="characters && characters.length">
+        <thead>
+          <tr>
+            <th>
+              <button class="btn btn-primary" (click)="toggleImage()"> {{ showImage ? 'Hide' : 'Show'}} Image</button>
+            </th>
+            <th>Name</th>
+            <th>Birth Year</th>
+            <th>Gender</th>
+            <th>Created</th>
+            <th>Strength</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let character of filteredCharacters">
+            <td>
+              <img *ngIf="showImage" [src]="character.imageUrl" [title]="character.name" [style.width.px]="imageWidth"
+                [style.margin.px]="imageMargin">
+            </td>
+            <td>
+              <a [routerLink]="['/characters', character.id]">
+                {{character.name}}
+              </a>
+            </td>
+            <td> {{character.birth_year}} </td>
+            <td> {{character.gender | uppercase }} </td>
+            <td> {{character.created | date:'dd MM y'}} </td>
+            <td>
+              <app-bar [bar]="character.strength"></app-bar>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
